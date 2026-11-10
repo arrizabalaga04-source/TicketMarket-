@@ -277,54 +277,35 @@
       overflow: hidden;
       box-shadow: var(--shadow-md);
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 420px 1fr;
     }
 
-    /* Contenedor visual elegante en CSS puro (sin depender de imágenes externas) */
     .listing-image-wrapper {
       position: relative;
-      background: linear-gradient(135deg, #064E3B 0%, #022C22 100%);
-      min-height: 320px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
-      text-align: center;
-      color: #FFFFFF;
+      background-color: #064E3B;
+      min-height: 340px;
+      overflow: hidden;
     }
 
-    .event-visual-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-      opacity: 0.9;
-    }
-
-    .event-visual-title {
-      font-family: var(--font-heading);
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 4px;
-    }
-
-    .event-visual-subtitle {
-      font-size: 13px;
-      color: #A7F3D0;
+    .listing-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .listing-badge-overlay {
       position: absolute;
       top: 20px;
       left: 20px;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(6, 78, 59, 0.92);
       backdrop-filter: blur(8px);
       color: #FFFFFF;
       padding: 6px 14px;
       border-radius: 100px;
       font-size: 12px;
       font-weight: 700;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 2;
     }
 
     .listing-content {
@@ -540,6 +521,9 @@
       .hero-grid, .listing-card, .steps-grid {
         grid-template-columns: 1fr;
       }
+      .listing-image-wrapper {
+        min-height: 240px;
+      }
       .specs-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -612,12 +596,10 @@
       </div>
 
       <div class="listing-card">
-        <!-- Bloque visual integrado en CSS sin dependencia de imágenes externas rotas -->
         <div class="listing-image-wrapper">
           <div class="listing-badge-overlay">4 Entradas Disponibles</div>
-          <div class="event-visual-icon">⚽</div>
-          <div class="event-visual-title">CONMEBOL Libertadores</div>
-          <div class="event-visual-subtitle">Gran Final</div>
+          <!-- Imagen de Wikimedia Commons: Final de la Copa Libertadores -->
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Final_de_la_Copa_CONMEBOL_Libertadores_en_el_Estadio_Centenario_-_20211127dicimouyap1119.jpg/800px-Final_de_la_Copa_CONMEBOL_Libertadores_en_el_Estadio_Centenario_-_20211127dicimouyap1119.jpg" alt="Final de la Copa Libertadores" class="listing-image">
         </div>
         
         <div class="listing-content">
