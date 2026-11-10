@@ -1,799 +1,963 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TicketMarket | Contacto entre particulares para entradas</title>
-  <meta name="description" content="Plataforma independiente de contacto entre compradores y vendedores de entradas. Consultá disponibilidad y coordiná directamente con el vendedor.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="TicketMarket | Contacto entre particulares para entradas">
-  <meta property="og:description" content="Consultá disponibilidad y coordiná directamente con el vendedor.">
-  <meta name="theme-color" content="#064E3B">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23064E3B'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%2310B981'/%3E%3C/svg%3E">
-
+  <meta name="theme-color" content="#123b30">
+  <title>TicketMarket | Marketplace de entradas</title>
+  <meta name="description" content="Marketplace independiente para comprar y vender entradas para eventos.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-primary: #F8F9FA;
-      --bg-surface: #FFFFFF;
-      --bg-subtle: #F3F4F6;
-
-      --brand-dark: #064E3B;
-      --brand-accent: #047857;
-      --brand-soft: #ECFDF5;
-      --brand-border: #D1FAE5;
-
-      --text-main: #0F172A;
-      --text-muted: #475569;
-      --text-light: #64748B;
-
-      --border-color: #E2E8F0;
-
-      --warn-bg: #FFFBEB;
-      --warn-border: #FDE68A;
-      --warn-text: #92400E;
-
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-
-      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-      --shadow-lg: 0 20px 30px -10px rgba(6, 78, 59, 0.08);
-
-      --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-
-      --header-h: 76px;
+      --green: #123b30;
+      --green-light: #1d5142;
+      --cream: #f7f7f3;
+      --white: #ffffff;
+      --text: #202923;
+      --muted: #727c75;
+      --border: #e5e9e4;
+      --danger: #a33b35;
+      --shadow: 0 12px 35px rgba(20, 45, 35, .06);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      * { transition: none !important; }
-    }
+    * { box-sizing: border-box; }
 
     body {
-      background-color: var(--bg-primary);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      background: var(--cream);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
     }
 
-    h1, h2, h3, h4, .brand-logo { font-family: var(--font-heading); }
+    button, input, select, textarea { font: inherit; }
 
-    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; }
 
-    :focus-visible {
-      outline: 3px solid #10B981;
-      outline-offset: 2px;
-      border-radius: 4px;
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
     }
 
-    section[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
-
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-
-    .skip-link {
-      position: absolute;
-      left: -9999px;
-      top: 8px;
-      background: var(--brand-dark);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: var(--radius-sm);
-      z-index: 200;
-    }
-    .skip-link:focus { left: 8px; }
-
-    /* Header */
     header {
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
     }
 
-    .nav-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      height: var(--header-h);
-    }
-
-    .brand-logo {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: var(--brand-dark);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand-logo.centered { justify-content: center; margin-bottom: 8px; }
-
-    .brand-mark {
-      width: 12px;
-      height: 12px;
-      background-color: var(--brand-accent);
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--brand-dark); }
-
-    .nav-actions { display: flex; align-items: center; gap: 12px; }
-
-    .menu-toggle {
-      display: none;
-      width: 44px;
-      height: 44px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-    }
-    .menu-toggle svg { width: 22px; height: 22px; stroke: var(--text-main); }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: var(--font-heading);
-      font-weight: 600;
-      font-size: 14px;
-      padding: 12px 22px;
-      border-radius: var(--radius-sm);
-      transition: all 0.2s ease;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-    .btn-lg { padding: 14px 28px; }
-
-    .btn-primary {
-      background-color: var(--brand-dark);
-      color: #FFFFFF;
-      box-shadow: 0 2px 4px rgba(6, 78, 59, 0.15);
-    }
-    .btn-primary:hover { background-color: var(--brand-accent); transform: translateY(-1px); }
-
-    .btn-secondary {
-      background-color: var(--bg-surface);
-      color: var(--text-main);
-      border-color: var(--border-color);
-    }
-    .btn-secondary:hover { background-color: var(--bg-subtle); border-color: #CBD5E1; }
-
-    .btn-light { background-color: #FFFFFF; color: var(--brand-dark); }
-    .btn-light:hover { background-color: #ECFDF5; }
-
-    .whatsapp-icon { width: 18px; height: 18px; fill: currentColor; }
-
-    /* Hero */
-    .hero {
-      padding: 72px 0 56px;
-      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-primary) 100%);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      background-color: var(--brand-soft);
-      border: 1px solid var(--brand-border);
-      border-radius: 100px;
-      color: var(--brand-dark);
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .badge-dot { width: 6px; height: 6px; background-color: var(--brand-accent); border-radius: 50%; }
-
-    .hero-title {
-      font-size: 46px;
-      line-height: 1.15;
-      letter-spacing: -1.5px;
-      margin-bottom: 18px;
-      font-weight: 800;
-    }
-
-    .hero-subtitle {
-      font-size: 18px;
-      color: var(--text-muted);
-      margin-bottom: 32px;
-      max-width: 540px;
-    }
-
-    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
-
-    .hero-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .hero-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .hero-card-title {
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-light);
-    }
-
-    .status-pill {
-      font-size: 12px;
-      font-weight: 600;
-      background-color: var(--brand-soft);
-      color: var(--brand-dark);
-      padding: 4px 10px;
-      border-radius: 100px;
-      white-space: nowrap;
-    }
-
-    .hero-card-text { font-size: 15px; color: var(--text-muted); margin-bottom: 16px; }
-
-    .hero-card-list {
-      list-style: none;
-      font-size: 13px;
-      color: var(--text-light);
-      border-top: 1px solid var(--border-color);
-      padding-top: 14px;
-    }
-
-    /* Section titles */
-    .section-title-wrap { margin-bottom: 32px; }
-
-    .section-tag {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--brand-accent);
-      margin-bottom: 6px;
-      display: block;
-    }
-
-    .section-title { font-size: 30px; letter-spacing: -0.8px; }
-
-    /* Listing */
-    .events-section { padding: 64px 0; }
-
-    .listing-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      display: grid;
-      grid-template-columns: 420px 1fr;
-    }
-
-    .listing-image-wrapper {
-      position: relative;
-      background-color: #064E3B;
-      min-height: 340px;
-      overflow: hidden;
-    }
-
-    .listing-image { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    .listing-badge-overlay {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: rgba(6, 78, 59, 0.92);
-      backdrop-filter: blur(8px);
-      color: #FFFFFF;
-      padding: 6px 14px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 700;
-      z-index: 2;
-    }
-
-    .image-credit {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 8px 14px;
-      font-size: 11px;
-      color: #FFFFFF;
-      background: linear-gradient(0deg, rgba(0,0,0,0.65), rgba(0,0,0,0));
-      z-index: 2;
-    }
-    .image-credit a { text-decoration: underline; }
-
-    .listing-content {
-      padding: 36px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .event-category {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--brand-accent);
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .event-title { font-size: 28px; line-height: 1.2; margin-bottom: 12px; }
-
-    .event-description { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; }
-
-    .specs-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      padding: 18px;
-      background-color: var(--bg-primary);
-      border-radius: var(--radius-md);
-      margin-bottom: 28px;
-    }
-
-    .spec-item { display: flex; flex-direction: column; }
-
-    .spec-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      color: var(--text-light);
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .spec-value { font-size: 15px; font-weight: 700; }
-
-    .purchase-row {
+    .nav {
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border-color);
     }
 
-    .price-container { display: flex; flex-direction: column; }
-    .price-label { font-size: 12px; color: var(--text-light); }
-
-    .price-amount {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--brand-dark);
+    .brand {
+      font: 800 23px "Manrope", sans-serif;
       letter-spacing: -1px;
-      line-height: 1;
+      color: var(--green);
+      text-decoration: none;
     }
 
-    .price-unit { font-size: 14px; font-weight: 500; color: var(--text-muted); }
+    .brand span { color: #8b9d91; }
 
-    .info-box {
-      margin-top: 24px;
-      padding: 16px 20px;
-      border-radius: var(--radius-md);
-      font-size: 13.5px;
-      line-height: 1.55;
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .info-box.neutral { background-color: #F0FDF4; border: 1px solid #BBF7D0; color: #166534; }
-    .info-box.neutral strong { color: #14532D; }
-
-    .info-box.warning { background-color: var(--warn-bg); border: 1px solid var(--warn-border); color: var(--warn-text); }
-
-    /* How it works */
-    .how-it-works {
-      padding: 72px 0;
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border-color);
-      border-bottom: 1px solid var(--border-color);
+    .button {
+      border: 1px solid var(--green);
+      border-radius: 7px;
+      padding: 11px 17px;
+      font-weight: 600;
+      font-size: 13px;
+      transition: .15s;
     }
 
-    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-
-    .step-card {
-      padding: 28px;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      background: var(--bg-primary);
+    .button-primary {
+      background: var(--green);
+      color: white;
     }
 
-    .step-number {
-      font-family: var(--font-heading);
+    .button-primary:hover { background: var(--green-light); }
+
+    .button-secondary {
+      background: white;
+      color: var(--green);
+    }
+
+    .button-secondary:hover { background: #f0f4f0; }
+
+    .button-danger {
+      border-color: #ead4d2;
+      background: white;
+      color: var(--danger);
+    }
+
+    .hero {
+      padding: 76px 0 62px;
+      background: var(--green);
+      color: white;
+    }
+
+    .hero-content { max-width: 700px; }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #b8c9be;
+      font-weight: 700;
+    }
+
+    h1 {
+      font: 700 clamp(36px, 6vw, 58px)/1.12 "Manrope", sans-serif;
+      letter-spacing: -2px;
+      margin: 18px 0;
+    }
+
+    .hero p {
+      color: #d5e0d9;
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .hero .button-secondary {
+      border-color: rgba(255,255,255,.5);
+      background: transparent;
+      color: white;
+    }
+
+    main { padding: 48px 0 80px; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font: 700 26px "Manrope", sans-serif;
+      letter-spacing: -.8px;
+      margin: 0 0 7px;
+    }
+
+    .subheading {
+      color: var(--muted);
       font-size: 14px;
-      font-weight: 800;
-      color: var(--brand-accent);
-      margin-bottom: 16px;
-      display: block;
+      margin: 0;
     }
 
-    .step-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-    .step-text { font-size: 14px; color: var(--text-muted); }
+    .search {
+      width: 100%;
+      max-width: 330px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 12px 14px;
+      background: white;
+      outline: none;
+    }
 
-    /* Safety */
-    .safety { padding: 64px 0 0; }
+    .search:focus, input:focus, select:focus, textarea:focus {
+      border-color: #789587;
+      box-shadow: 0 0 0 3px rgba(18,59,48,.07);
+    }
 
-    .safety-list {
-      list-style: none;
+    .listings {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
 
-    .safety-list li {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 18px 20px;
-      font-size: 14px;
-      color: var(--text-muted);
+    .listing-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
     }
 
-    .safety-list strong { color: var(--text-main); display: block; margin-bottom: 4px; }
+    .listing-category {
+      color: var(--green-light);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-    /* Seller CTA */
-    .seller-cta { padding: 64px 0; }
+    .listing-card h3 {
+      font: 700 19px "Manrope", sans-serif;
+      margin: 12px 0 8px;
+      overflow-wrap: anywhere;
+    }
 
-    .seller-box {
-      background: var(--brand-dark);
-      color: #FFFFFF;
-      border-radius: var(--radius-lg);
-      padding: 48px;
+    .listing-info {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .listing-description {
+      color: #4e5952;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 13px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .listing-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      margin-top: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 32px;
-      box-shadow: var(--shadow-lg);
+      gap: 10px;
     }
 
-    .seller-content h2 { font-size: 28px; margin-bottom: 8px; }
-    .seller-content p { color: #A7F3D0; font-size: 16px; }
+    .price {
+      font: 800 22px "Manrope", sans-serif;
+      color: var(--green);
+    }
 
-    /* Footer */
-    footer {
-      background-color: var(--bg-surface);
-      border-top: 1px solid var(--border-color);
-      padding: 48px 0;
-      color: var(--text-light);
+    .price small {
+      display: block;
+      color: var(--muted);
+      font: 400 11px "DM Sans", sans-serif;
+    }
+
+    .empty, .loading {
+      padding: 45px 20px;
+      text-align: center;
+      border: 1px dashed #cbd5cd;
+      border-radius: 10px;
+      color: var(--muted);
+      background: rgba(255,255,255,.5);
+      grid-column: 1 / -1;
+    }
+
+    .panel {
+      margin-top: 55px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 { margin-bottom: 8px; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #46534a;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      background: white;
+      color: var(--text);
+      outline: none;
       font-size: 13px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .auth-box {
+      max-width: 470px;
+      margin: 0 auto;
+    }
+
+    .auth-box .field { margin-top: 15px; }
+
+    .auth-switch {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+
+    .text-button {
+      color: var(--green);
+      font-weight: 700;
+      border: 0;
+      padding: 0;
+      background: none;
+      text-decoration: underline;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      border-radius: 6px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      display: block;
+      color: #8d302b;
+      background: #fbefee;
+    }
+
+    .message.success {
+      display: block;
+      color: #24533b;
+      background: #edf5ef;
+    }
+
+    .account-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 15px 0 5px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .my-listing {
+      border-top: 1px solid var(--border);
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .my-listing strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .my-listing small { color: var(--muted); }
+
+    .my-listing-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .small-button {
+      font-size: 11px;
+      padding: 7px 10px;
+    }
+
+    .notice {
+      margin-top: 35px;
+      border: 1px solid var(--border);
+      background: #f0f2ed;
+      border-radius: 8px;
+      padding: 18px 20px;
+      color: #59645c;
+      font-size: 12px;
       line-height: 1.7;
     }
 
-    .footer-brand { text-align: center; margin-bottom: 20px; }
-    .footer-brand p { color: var(--text-muted); font-size: 14px; }
-
-    .footer-disclaimer {
-      max-width: 860px;
-      margin: 0 auto;
-      text-align: center;
-      padding-top: 24px;
-      border-top: 1px solid var(--border-color);
+    footer {
+      background: #102e26;
+      color: #c5d2ca;
+      padding: 30px 0;
+      font-size: 12px;
+      line-height: 1.7;
     }
 
-    /* Responsive */
-    @media (max-width: 900px) {
-      .hero-grid, .listing-card, .steps-grid, .safety-list { grid-template-columns: 1fr; }
-      .listing-image-wrapper { min-height: 240px; }
-      .listing-content { padding: 24px; }
-      .specs-grid { grid-template-columns: repeat(2, 1fr); }
-      .purchase-row { flex-direction: column; align-items: stretch; }
-      .purchase-row .btn { width: 100%; }
-      .seller-box { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
-      .hero-title { font-size: 34px; }
-      .nav-cta { display: none; }
+    footer strong { color: white; }
 
-      .menu-toggle { display: inline-flex; }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: var(--header-h);
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        background: var(--bg-surface);
-        border-bottom: 1px solid var(--border-color);
-        box-shadow: var(--shadow-md);
-      }
-      .nav-links.open { display: flex; }
-      .nav-links a { display: block; padding: 16px 24px; font-size: 16px; border-top: 1px solid var(--border-color); }
+    .hidden { display: none !important; }
+
+    @media (max-width: 850px) {
+      .listings { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .nav { min-height: 66px; }
+      .brand { font-size: 20px; }
+      .nav-actions { gap: 7px; }
+      .nav-actions .button { padding: 9px 10px; font-size: 11px; }
+      .hero { padding: 55px 0 48px; }
+      h1 { letter-spacing: -1.5px; }
+      main { padding-top: 35px; }
+      .section-heading { align-items: stretch; flex-direction: column; }
+      .search { max-width: none; }
+      .listings { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .panel { padding: 20px 16px; }
+      .my-listing { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
+
 <body>
-
-  <a href="#contenido" class="skip-link">Saltar al contenido</a>
-
-  <header>
-    <div class="container nav-wrapper">
-      <a href="#" class="brand-logo" aria-label="TicketMarket, inicio">
-        <span class="brand-mark" aria-hidden="true"></span>
-        TicketMarket
-      </a>
-
-      <nav aria-label="Principal">
-        <ul class="nav-links" id="nav-links">
-          <li><a href="#entradas">Entradas disponibles</a></li>
-          <li><a href="#proceso">Cómo funciona</a></li>
-          <li><a href="#seguridad">Antes de comprar</a></li>
-          <li><a href="#vender">Publicar entradas</a></li>
-        </ul>
-      </nav>
-
-      <div class="nav-actions">
-        <a href="#entradas" class="btn btn-primary nav-cta">Ver disponibilidad</a>
-        <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <path d="M4 7h16M4 12h16M4 17h16"/>
-          </svg>
-        </button>
-      </div>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#">Ticket<span>Market</span></a>
+    <div class="nav-actions">
+      <button class="button button-secondary" id="loginNav">Iniciar sesión</button>
+      <button class="button button-primary" id="publishNav">Publicar entrada</button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main id="contenido">
+<section class="hero">
+  <div class="container hero-content">
+    <div class="eyebrow">Marketplace independiente de entradas</div>
+    <h1>Encontrá tu próximo evento.</h1>
+    <p>Un espacio para descubrir entradas disponibles y conectar directamente con vendedores.</p>
+    <div class="hero-actions">
+      <button class="button button-secondary" id="exploreButton">Explorar entradas</button>
+      <button class="button button-secondary" id="heroPublish">Publicar una entrada</button>
+    </div>
+  </div>
+</section>
 
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="badge">
-            <span class="badge-dot" aria-hidden="true"></span>
-            Plataforma de contacto entre particulares
-          </div>
-          <h1 class="hero-title">Encontrá tu entrada. No te pierdas el evento.</h1>
-          <p class="hero-subtitle">Te ponemos en contacto directo con quien tiene entradas disponibles. Consultás, preguntás lo que necesites y coordinás con el vendedor.</p>
-          <div class="hero-buttons">
-            <a href="#entradas" class="btn btn-primary">Ver entradas disponibles</a>
-            <a href="#vender" class="btn btn-secondary">Publicar una entrada</a>
-          </div>
+<main class="container">
+  <section id="marketplace">
+    <div class="section-heading">
+      <div>
+        <h2>Entradas disponibles</h2>
+        <p class="subheading">Publicaciones activas de vendedores.</p>
+      </div>
+      <input class="search" id="searchInput" type="search" placeholder="Buscar evento, ciudad o categoría...">
+    </div>
+    <div class="listings" id="listings">
+      <div class="loading">Cargando publicaciones...</div>
+    </div>
+  </section>
+
+  <section class="panel hidden" id="authPanel">
+    <div class="auth-box">
+      <h2 id="authTitle">Iniciar sesión</h2>
+      <p class="subheading" id="authSubtitle">Ingresá a tu cuenta de TicketMarket.</p>
+
+      <form id="authForm">
+        <div class="field">
+          <label for="authEmail">Correo electrónico</label>
+          <input id="authEmail" type="email" autocomplete="email" required placeholder="tu@email.com">
+        </div>
+        <div class="field">
+          <label for="authPassword">Contraseña</label>
+          <input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Mínimo 6 caracteres">
+        </div>
+        <div class="form-actions">
+          <button class="button button-primary" type="submit" id="authSubmit">Iniciar sesión</button>
+        </div>
+      </form>
+
+      <div id="authMessage" class="message"></div>
+      <p class="auth-switch">
+        <span id="authSwitchText">¿No tenés cuenta?</span>
+        <button class="text-button" id="authSwitch" type="button">Crear cuenta</button>
+      </p>
+    </div>
+  </section>
+
+  <section class="panel hidden" id="publishPanel">
+    <h2>Publicar una entrada</h2>
+    <p class="subheading">Completá los datos de tu publicación. Se mostrará automáticamente al publicarla.</p>
+
+    <form id="listingForm">
+      <div class="form-grid">
+        <div class="field full">
+          <label for="eventName">Nombre del evento *</label>
+          <input id="eventName" maxlength="100" required placeholder="Ej. Final Copa Libertadores">
         </div>
 
-        <div class="hero-card">
-          <div class="hero-card-header">
-            <span class="hero-card-title">Operación directa</span>
-            <span class="status-pill">Entrada nominal</span>
-          </div>
-          <p class="hero-card-text">
-            La entrada se asigna a tu nombre y correo a través del sistema del organizador. La operación se acuerda entre comprador y vendedor.
-          </p>
-          <ul class="hero-card-list">
-            <li>✓ Nominación en la plataforma del organizador</li>
-            <li>✓ Contacto directo vía WhatsApp</li>
-          </ul>
+        <div class="field">
+          <label for="eventDate">Fecha del evento</label>
+          <input id="eventDate" type="date">
+        </div>
+
+        <div class="field">
+          <label for="city">Ciudad *</label>
+          <input id="city" maxlength="80" required placeholder="Ej. Montevideo">
+        </div>
+
+        <div class="field">
+          <label for="category">Categoría *</label>
+          <input id="category" maxlength="60" required placeholder="Ej. Categoría 2">
+        </div>
+
+        <div class="field">
+          <label for="venue">Tribuna / ubicación *</label>
+          <input id="venue" maxlength="80" required placeholder="Ej. Tribuna Olímpica">
+        </div>
+
+        <div class="field">
+          <label for="quantity">Cantidad de entradas *</label>
+          <input id="quantity" type="number" min="1" max="20" value="1" required>
+        </div>
+
+        <div class="field">
+          <label for="price">Precio por entrada (USD) *</label>
+          <input id="price" type="number" min="1" max="1000000" step="0.01" required placeholder="600">
+        </div>
+
+        <div class="field full">
+          <label for="whatsapp">WhatsApp con código de país *</label>
+          <input id="whatsapp" type="tel" maxlength="15" required placeholder="59892466352">
+          <span class="form-note">Ingresá solo números, incluyendo el código de país. Ejemplo: 59892466352.</span>
+        </div>
+
+        <div class="field full">
+          <label for="description">Descripción adicional</label>
+          <textarea id="description" maxlength="700" placeholder="Información adicional sobre las entradas..."></textarea>
         </div>
       </div>
-    </section>
 
-    <section id="entradas" class="events-section">
-      <div class="container">
-        <div class="section-title-wrap">
-          <span class="section-tag">Publicación destacada</span>
-          <h2 class="section-title">Entradas disponibles hoy</h2>
-        </div>
+      <p class="form-note">No publiques imágenes de entradas, códigos QR ni códigos de barras.</p>
 
+      <div class="form-actions">
+        <button class="button button-primary" type="submit" id="listingSubmit">Publicar entrada</button>
+        <button class="button button-secondary" type="button" id="cancelPublish">Cancelar</button>
+      </div>
+    </form>
+    <div id="listingMessage" class="message"></div>
+  </section>
+
+  <section class="panel hidden" id="accountPanel">
+    <h2>Mi cuenta</h2>
+    <div class="account-bar">
+      <span id="accountEmail"></span>
+      <button class="button button-secondary small-button" id="logoutButton">Cerrar sesión</button>
+    </div>
+
+    <h3 style="font:600 17px Manrope;margin:28px 0 8px;">Mis publicaciones</h3>
+    <div id="myListings">
+      <p class="subheading">Cargando...</p>
+    </div>
+  </section>
+
+  <div class="notice">
+    <strong>Información importante:</strong> TicketMarket es una plataforma independiente de publicación y contacto entre usuarios. No procesa pagos, no verifica la autenticidad de las entradas y no garantiza las operaciones entre compradores y vendedores. Antes de pagar, verificá la información y la identidad de la otra parte. No compartas códigos QR ni códigos de acceso. TicketMarket no está afiliada a CONMEBOL ni a los organizadores de eventos.
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <strong>TicketMarket</strong><br>
+    Marketplace independiente de entradas.<br>
+    © 2026 TicketMarket. Todos los derechos reservados.
+  </div>
+</footer>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  const SUPABASE_URL = "https://usthzmowdgrbolnkoakc.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_qQQzrvK-VVsw4Ev4KqSiLw_kUV8mEoA";
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let currentUser = null;
+  let isRegisterMode = false;
+  let allListings = [];
+
+  const $ = (id) => document.getElementById(id);
+
+  function showMessage(element, message, type = "error") {
+    element.textContent = message;
+    element.className = "message " + type;
+  }
+
+  function clearMessage(element) {
+    element.textContent = "";
+    element.className = "message";
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[char]);
+  }
+
+  function formatDate(date) {
+    if (!date) return "Fecha no especificada";
+    const parsed = new Date(date + "T00:00:00");
+    return parsed.toLocaleDateString("es-UY", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    });
+  }
+
+  function whatsappLink(number) {
+    const clean = String(number || "").replace(/\D/g, "");
+    return "https://wa.me/" + clean;
+  }
+
+  function showPanel(panelId) {
+    ["authPanel", "publishPanel"].forEach(id => $(id).classList.add("hidden"));
+    if (panelId) {
+      $(panelId).classList.remove("hidden");
+      $(panelId).scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function updateNavigation() {
+    $("loginNav").textContent = currentUser ? "Mi cuenta" : "Iniciar sesión";
+    $("publishNav").textContent = currentUser ? "Publicar entrada" : "Crear cuenta";
+    $("accountPanel").classList.toggle("hidden", !currentUser);
+
+    if (currentUser) {
+      $("accountEmail").textContent = currentUser.email || "";
+      loadMyListings();
+    }
+  }
+
+  function renderListings(items) {
+    const container = $("listings");
+
+    if (!items.length) {
+      container.innerHTML = '<div class="empty">No hay publicaciones disponibles por el momento.</div>';
+      return;
+    }
+
+    container.innerHTML = items.map(item => {
+      const date = formatDate(item.event_date);
+      const link = whatsappLink(item.whatsapp);
+
+      return `
         <article class="listing-card">
-          <div class="listing-image-wrapper">
-            <div class="listing-badge-overlay">4 entradas disponibles</div>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Final_de_la_Copa_CONMEBOL_Libertadores_en_el_Estadio_Centenario_-_20211127dicimouyap1119.jpg/800px-Final_de_la_Copa_CONMEBOL_Libertadores_en_el_Estadio_Centenario_-_20211127dicimouyap1119.jpg"
-                 alt="Estadio Centenario durante la final de la Copa Libertadores 2021"
-                 class="listing-image" loading="lazy" width="800" height="533">
-            <div class="image-credit">
-              Foto ilustrativa de la final 2021 ·
-              <a href="https://commons.wikimedia.org/wiki/File:Final_de_la_Copa_CONMEBOL_Libertadores_en_el_Estadio_Centenario_-_20211127dicimouyap1119.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>
-            </div>
+          <div class="listing-category">${escapeHTML(item.category)}</div>
+          <h3>${escapeHTML(item.event_name)}</h3>
+          <div class="listing-info">
+            ${escapeHTML(item.city)}<br>
+            ${escapeHTML(item.venue)}<br>
+            ${escapeHTML(date)}<br>
+            ${escapeHTML(item.quantity)} entrada(s) disponible(s)
           </div>
-
-          <div class="listing-content">
-            <div>
-              <span class="event-category">Fútbol internacional · CONMEBOL</span>
-              <h3 class="event-title">Final de la Copa Libertadores</h3>
-              <p class="event-description">Entradas para la final, ubicación en Tribuna Olímpica, Categoría 2. Consultá por la fecha y los detalles de la ubicación antes de acordar.</p>
-
-              <dl class="specs-grid">
-                <div class="spec-item">
-                  <dt class="spec-label">Categoría</dt>
-                  <dd class="spec-value">Categoría 2</dd>
-                </div>
-                <div class="spec-item">
-                  <dt class="spec-label">Tribuna</dt>
-                  <dd class="spec-value">Olímpica</dd>
-                </div>
-                <div class="spec-item">
-                  <dt class="spec-label">Disponibles</dt>
-                  <dd class="spec-value">4 entradas</dd>
-                </div>
-                <div class="spec-item">
-                  <dt class="spec-label">Asignación</dt>
-                  <dd class="spec-value">Nominal</dd>
-                </div>
-              </dl>
+          ${item.description ? `<p class="listing-description">${escapeHTML(item.description)}</p>` : ""}
+          <div class="listing-bottom">
+            <div class="price">
+              US$ ${Number(item.price_usd).toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+              <small>por entrada</small>
             </div>
-
-            <div>
-              <div class="purchase-row">
-                <div class="price-container">
-                  <span class="price-label">Precio por entrada</span>
-                  <div>
-                    <span class="price-amount">USD 600</span>
-                    <span class="price-unit">/ c.u.</span>
-                  </div>
-                </div>
-
-                <a href="https://wa.me/59892466352?text=Hola%2C%20estoy%20interesado%20en%20las%20entradas%20para%20la%20Final%20de%20la%20Copa%20Libertadores%20(Categor%C3%ADa%202%2C%20Tribuna%20Ol%C3%ADmpica)."
-                   target="_blank" rel="noopener" class="btn btn-primary btn-lg">
-                  <svg class="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                  </svg>
-                  Coordinar por WhatsApp
-                </a>
-              </div>
-
-              <div class="info-box neutral">
-                <strong>Cómo se entrega:</strong> las entradas todavía no tienen titular asignado. Una vez acordada la operación, el vendedor registra tu nombre y correo en el portal de CONMEBOL y recibís la confirmación en tu casilla.
-              </div>
-
-              <div class="info-box warning">
-                <strong>Importante:</strong> las condiciones de transferencia y reventa las define el organizador. Confirmá con el vendedor que la nominación a tu nombre está permitida antes de pagar.
-              </div>
-            </div>
+            <a class="button button-primary" href="${link}" target="_blank" rel="noopener noreferrer">Contactar</a>
           </div>
         </article>
+      `;
+    }).join("");
+  }
 
-      </div>
-    </section>
+  async function loadListings() {
+    const { data, error } = await supabase
+      .from("listings")
+      .select("*")
+      .eq("status", "active")
+      .order("created_at", { ascending: false });
 
-    <section id="proceso" class="how-it-works">
-      <div class="container">
-        <div class="section-title-wrap">
-          <span class="section-tag">Transparencia</span>
-          <h2 class="section-title">Cómo funciona la operación</h2>
-        </div>
+    if (error) {
+      $("listings").innerHTML = '<div class="empty">No se pudieron cargar las publicaciones. Recargá la página.</div>';
+      console.error(error);
+      return;
+    }
 
-        <div class="steps-grid">
-          <div class="step-card">
-            <span class="step-number">PASO 01</span>
-            <h3 class="step-title">Consulta directa</h3>
-            <p class="step-text">Contactás al vendedor por WhatsApp para confirmar que las entradas siguen disponibles y resolver tus dudas.</p>
-          </div>
+    allListings = data || [];
+    filterListings();
+  }
 
-          <div class="step-card">
-            <span class="step-number">PASO 02</span>
-            <h3 class="step-title">Asignación de titular</h3>
-            <p class="step-text">El vendedor te pide nombre completo y correo para hacer la nominación en la plataforma del organizador.</p>
-          </div>
+  function filterListings() {
+    const term = $("searchInput").value.trim().toLowerCase();
 
-          <div class="step-card">
-            <span class="step-number">PASO 03</span>
-            <h3 class="step-title">Confirmación del organizador</h3>
-            <p class="step-text">Recibís en tu correo la notificación enviada por el organizador (CONMEBOL). Verificá que figure tu nombre antes de cerrar el pago.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    const filtered = allListings.filter(item => {
+      const content = [
+        item.event_name,
+        item.city,
+        item.category,
+        item.venue,
+        item.description
+      ].join(" ").toLowerCase();
 
-    <section id="seguridad" class="safety">
-      <div class="container">
-        <div class="section-title-wrap">
-          <span class="section-tag">Recomendaciones</span>
-          <h2 class="section-title">Antes de comprar, tené en cuenta</h2>
-        </div>
+      return content.includes(term);
+    });
 
-        <ul class="safety-list">
-          <li><strong>Pedí que se verifique la nominación</strong>Asegurate de que el cambio de titular se pueda ver en el sistema oficial antes de entregar el dinero completo.</li>
-          <li><strong>Evitá pagos íntegros por adelantado</strong>Acordá una forma de pago que te dé respaldo, idealmente contra la confirmación del organizador.</li>
-          <li><strong>Consultá las condiciones del organizador</strong>Revisá los términos de la entrada sobre transferencia y reventa en los canales oficiales.</li>
-          <li><strong>Guardá todo</strong>Conservá la conversación, los comprobantes de pago y los correos de confirmación.</li>
-        </ul>
-      </div>
-    </section>
+    renderListings(filtered);
+  }
 
-    <section id="vender" class="seller-cta">
-      <div class="container">
-        <div class="seller-box">
-          <div class="seller-content">
-            <h2>¿Tenés entradas que no vas a usar?</h2>
-            <p>Consultanos para publicarlas y conectarte con compradores interesados.</p>
-          </div>
-          <a href="https://wa.me/59892466352?text=Hola%2C%20quiero%20publicar%20una%20entrada%20en%20TicketMarket."
-             target="_blank" rel="noopener" class="btn btn-light btn-lg">
-            Consultar para publicar
-          </a>
-        </div>
-      </div>
-    </section>
+  function setAuthMode(register) {
+    isRegisterMode = register;
+    $("authTitle").textContent = register ? "Crear cuenta" : "Iniciar sesión";
+    $("authSubtitle").textContent = register
+      ? "Registrate para publicar tus entradas."
+      : "Ingresá a tu cuenta de TicketMarket.";
+    $("authSubmit").textContent = register ? "Crear cuenta" : "Iniciar sesión";
+    $("authSwitchText").textContent = register ? "¿Ya tenés cuenta?" : "¿No tenés cuenta?";
+    $("authSwitch").textContent = register ? "Iniciar sesión" : "Crear cuenta";
+    $("authPassword").autocomplete = register ? "new-password" : "current-password";
+    clearMessage($("authMessage"));
+  }
 
-  </main>
+  async function handleAuth(event) {
+    event.preventDefault();
+    const email = $("authEmail").value.trim();
+    const password = $("authPassword").value;
 
-  <footer>
-    <div class="container">
-      <div class="footer-brand">
-        <div class="brand-logo centered">
-          <span class="brand-mark" aria-hidden="true"></span>
-          TicketMarket
-        </div>
-        <p>Encontrá tu entrada. No te pierdas el evento.</p>
-      </div>
+    $("authSubmit").disabled = true;
+    clearMessage($("authMessage"));
 
-      <div class="footer-disclaimer">
-        Aviso de transparencia: <strong>TicketMarket</strong> es una plataforma independiente de contacto entre usuarios y no está asociada, vinculada ni patrocinada por CONMEBOL ni por los organizadores de los eventos. Las condiciones de la operación se acuerdan directamente entre comprador y vendedor. Se recomienda verificar el proceso de nominación y transferencia en los canales oficiales correspondientes.
-        <!-- TODO: agregar nombre/identificación del responsable y datos de contacto para dar más confianza. -->
-      </div>
-    </div>
-  </footer>
+    try {
+      if (isRegisterMode) {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
 
-  <script>
-    (function () {
-      var toggle = document.getElementById('menu-toggle');
-      var nav = document.getElementById('nav-links');
-      if (!toggle || !nav) return;
+        if (data.session) {
+          showMessage($("authMessage"), "Cuenta creada correctamente. Ya podés publicar.", "success");
+        } else {
+          showMessage($("authMessage"), "Te enviamos un correo para confirmar tu cuenta. Revisá tu bandeja de entrada y luego iniciá sesión.", "success");
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
 
-      function setOpen(open) {
-        nav.classList.toggle('open', open);
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        showMessage($("authMessage"), "Sesión iniciada correctamente.", "success");
+        showPanel(null);
       }
+    } catch (error) {
+      showMessage($("authMessage"), error.message || "No se pudo completar la operación.");
+    } finally {
+      $("authSubmit").disabled = false;
+    }
+  }
 
-      toggle.addEventListener('click', function () {
-        setOpen(!nav.classList.contains('open'));
-      });
+  async function handlePublish(event) {
+    event.preventDefault();
 
-      nav.addEventListener('click', function (e) {
-        if (e.target.tagName === 'A') setOpen(false);
-      });
+    if (!currentUser) {
+      showPanel("authPanel");
+      setAuthMode(false);
+      return;
+    }
 
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') setOpen(false);
-      });
-    })();
-  </script>
+    const whatsapp = $("whatsapp").value.replace(/\D/g, "");
+    if (whatsapp.length < 8 || whatsapp.length > 15) {
+      showMessage($("listingMessage"), "Ingresá un WhatsApp válido con código de país.");
+      return;
+    }
 
+    const quantity = Number($("quantity").value);
+    const price = Number($("price").value);
+
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) {
+      showMessage($("listingMessage"), "La cantidad debe ser un número entre 1 y 20.");
+      return;
+    }
+
+    if (!Number.isFinite(price) || price <= 0 || price > 1000000) {
+      showMessage($("listingMessage"), "Ingresá un precio válido.");
+      return;
+    }
+
+    const listing = {
+      seller_id: currentUser.id,
+      event_name: $("eventName").value.trim(),
+      event_date: $("eventDate").value || null,
+      city: $("city").value.trim(),
+      category: $("category").value.trim(),
+      venue: $("venue").value.trim(),
+      quantity,
+      price_usd: price,
+      whatsapp,
+      description: $("description").value.trim(),
+      status: "active"
+    };
+
+    $("listingSubmit").disabled = true;
+    $("listingSubmit").textContent = "Publicando...";
+    clearMessage($("listingMessage"));
+
+    try {
+      const { error } = await supabase.from("listings").insert(listing);
+      if (error) throw error;
+
+      $("listingForm").reset();
+      showMessage($("listingMessage"), "Tu publicación ya está activa.", "success");
+      await loadListings();
+      await loadMyListings();
+    } catch (error) {
+      showMessage($("listingMessage"), error.message || "No se pudo publicar la entrada.");
+    } finally {
+      $("listingSubmit").disabled = false;
+      $("listingSubmit").textContent = "Publicar entrada";
+    }
+  }
+
+  async function loadMyListings() {
+    if (!currentUser) return;
+
+    const container = $("myListings");
+    container.innerHTML = '<p class="subheading">Cargando publicaciones...</p>';
+
+    const { data, error } = await supabase
+      .from("listings")
+      .select("*")
+      .eq("seller_id", currentUser.id)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      container.textContent = "No se pudieron cargar tus publicaciones.";
+      console.error(error);
+      return;
+    }
+
+    if (!data || !data.length) {
+      container.innerHTML = '<p class="subheading">Todavía no publicaste entradas.</p>';
+      return;
+    }
+
+    container.innerHTML = data.map(item => `
+      <div class="my-listing">
+        <div>
+          <strong>${escapeHTML(item.event_name)}</strong>
+          <small>${escapeHTML(item.category)} · US$ ${Number(item.price_usd).toFixed(2)} · Estado: ${escapeHTML(item.status)}</small>
+        </div>
+        <div class="my-listing-actions">
+          ${item.status === "active"
+            ? `<button class="button button-secondary small-button" data-action="pause" data-id="${escapeHTML(item.id)}">Pausar</button>`
+            : `<button class="button button-secondary small-button" data-action="activate" data-id="${escapeHTML(item.id)}">Activar</button>`}
+          <button class="button button-danger small-button" data-action="delete" data-id="${escapeHTML(item.id)}">Eliminar</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  async function manageListing(action, id) {
+    if (!currentUser) return;
+
+    if (action === "delete" && !confirm("¿Seguro que querés eliminar esta publicación?")) return;
+
+    let result;
+
+    if (action === "delete") {
+      result = await supabase.from("listings").delete().eq("id", id).eq("seller_id", currentUser.id);
+    } else {
+      const newStatus = action === "pause" ? "paused" : "active";
+      result = await supabase.from("listings").update({ status: newStatus }).eq("id", id).eq("seller_id", currentUser.id);
+    }
+
+    if (result.error) {
+      alert("No se pudo actualizar la publicación: " + result.error.message);
+      return;
+    }
+
+    await loadListings();
+    await loadMyListings();
+  }
+
+  $("searchInput").addEventListener("input", filterListings);
+  $("authForm").addEventListener("submit", handleAuth);
+  $("listingForm").addEventListener("submit", handlePublish);
+  $("authSwitch").addEventListener("click", () => setAuthMode(!isRegisterMode));
+
+  $("loginNav").addEventListener("click", () => {
+    if (currentUser) {
+      $("accountPanel").scrollIntoView({ behavior: "smooth" });
+    } else {
+      setAuthMode(false);
+      showPanel("authPanel");
+    }
+  });
+
+  function openPublish() {
+    if (!currentUser) {
+      setAuthMode(true);
+      showPanel("authPanel");
+    } else {
+      showPanel("publishPanel");
+    }
+  }
+
+  $("publishNav").addEventListener("click", openPublish);
+  $("heroPublish").addEventListener("click", openPublish);
+  $("exploreButton").addEventListener("click", () => {
+    $("marketplace").scrollIntoView({ behavior: "smooth" });
+  });
+
+  $("cancelPublish").addEventListener("click", () => showPanel(null));
+
+  $("logoutButton").addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    showPanel(null);
+  });
+
+  $("myListings").addEventListener("click", async (event) => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+    await manageListing(button.dataset.action, button.dataset.id);
+  });
+
+  supabase.auth.onAuthStateChange((_event, session) => {
+    currentUser = session?.user || null;
+    updateNavigation();
+  });
+
+  const { data: { session } } = await supabase.auth.getSession();
+  currentUser = session?.user || null;
+  updateNavigation();
+  await loadListings();
+</script>
 </body>
 </html>
